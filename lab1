@@ -1,0 +1,209 @@
+#include <iostream>
+
+using  namespace std;
+
+/* Вывести данные о книгах, тираж которх не превышает 10000 экземпляров */ 
+struct Book
+{
+	char authors[512];
+	char genre[50];
+	char title[200];
+	char tirage[200];
+
+	void printInfo();
+	void readInfo();
+};
+
+void Book::printInfo()
+{
+	cout << endl << "Book:" << endl;
+	cout << "authors: " << authors << endl;
+	cout << "genre: " << genre << endl;
+	cout << "title: " << title << endl;
+	cout << "tirage: " << tirage << endl;
+}
+
+void Book::readInfo()
+{
+	cout << "\nInput book authors: ";
+	cin.ignore(cin.rdbuf()->in_avail());
+	cin.getline(authors, sizeof(authors));
+
+	cout << "\nInput book genre: ";
+	cin.ignore(cin.rdbuf()->in_avail());
+	cin.getline(genre, sizeof(genre));
+
+	cout << "\nInput book tirage: ";
+	cin >> tirage;
+
+	cout << "\nInput book  title: ";
+	cin.ignore(cin.rdbuf()->in_avail());
+	cin.getline(title, sizeof(title));
+}
+
+void task1()
+{
+
+	const int N = 3;
+	Book library[N];
+
+	for (size_t i = 0; i < N; i++)
+	{
+		library[i].readInfo();
+	}
+
+	for (size_t i = 0; i < N; i++)
+	{
+		library[i].printInfo();
+	}
+
+	int tirageTenThusand = 10000;
+
+	for (size_t i = 0; i < N; i++)
+	{
+		if (library[i].tirage < library[tirageTenThusand].tirage)
+			tirageTenThusand = i;
+	}
+
+	cout << endl << "The books with ten thusand tirage and less:  ";
+	library[tirageTenThusand].printInfo();
+}
+
+/* вывести наименование товара и конечную дату приминения(годен до:) */ 
+
+struct Date 
+{
+	short day;
+	short month;
+	short year;
+	bool isCorrect();
+};
+
+bool Date::isCorrect()
+{
+	bool result = false;
+
+	if (month > 0 && month <= 12 && year <= 2021)
+	{
+		switch (month)
+		{
+		case 1:
+		case 3:
+		case 5:
+		case 7:
+		case 8:
+		case 10:
+		case 12:
+		{
+			if ((day <= 31) && (day > 0))
+				result = true;
+			break;
+		}
+
+		case 4:
+		case 6:
+		case 9:
+		case 11:
+		{
+			if ((day <= 30) && (day > 0))
+				result = true;
+			break;
+		}
+
+		case 2:
+		{
+			if (year % 4 != 0)
+			{
+				if ((day <= 28) && (day > 0))
+					result = true;
+			}
+			else
+				if (year % 400 == 0)
+				{
+					if ((day <= 29) && (day > 0))
+						result = true;
+				}
+				else
+					if ((year % 100 == 0) && (year % 400 != 0))
+					{
+						if ((day == 28) && (day > 0))
+							result = true;
+					}
+					else
+						if ((year % 4 == 0) && (year % 100 != 0))
+							if ((day <= 29) && (day > 0))
+								result = true;
+			break;
+		}
+
+		default:
+			result = false;
+		}
+	}
+	return result;
+}
+struct Tovar
+{
+    char name [256];
+    Date dateOfManufacture;
+    Date ShelfLife;
+    char price[100];
+    short BatchNumber;
+};
+
+void task2()
+{
+   const int N = 2;
+   Tovar group[N];
+   
+   for (int i = 0; i < N; i++)
+	{
+		cout << "\nInput name: ";
+		cin.ignore(cin.rdbuf()->in_avail());
+		cin.getline(group[i].name, 256);
+		
+		cout << "\nInput price: ";
+		cin.ignore(cin.rdbuf()->in_avail());
+		cin.getline(group[i].price, 100);
+		
+		cout << "\nInput batch number:";
+		cin.ignore(cin.rdbuf()->in_avail());
+		cin >> group[i].BatchNumber;
+		
+        do
+		{
+            cout << "\nInput date of manufacture: ";
+            cin.ignore(cin.rdbuf()->in_avail());
+	        cin >> group[i].dateOfManufacture.day >> group[i].dateOfManufacture.month >> group[i].dateOfManufacture.year;
+		} while (!group[i].dateOfManufacture.isCorrect());
+		
+	    do
+		{
+			cout << "\nInput shelf life: ";
+			cin.ignore(cin.rdbuf()->in_avail());
+			cin >> group[i].ShelfLife.day >> group[i].ShelfLife.month >> group[i].ShelfLife.year;
+		} while (!group[i].ShelfLife.isCorrect());	
+		
+
+		cin.clear();
+	}
+	
+	for (int i = 0; i < N; i++)
+	{
+		cout << "\nName: " << group[i].name << endl;
+		cout << "\nDate of manufacture: " << group[i].dateOfManufacture.day << "." << group[i].dateOfManufacture.month << "." << group[i].dateOfManufacture.year;
+		cout << "\nShelf life: " << group[i].ShelfLife.day << "." << group[i].ShelfLife.month << "." << group[i].ShelfLife.year;
+		cout << "\nPrice: " << group[i].price << endl;
+		cout << "\nBatch number: " << group[i].BatchNumber << endl;
+		
+		cout << "Tovar " << group[i].name << " goden do " << group[i].ShelfLife.day << "." << group[i].ShelfLife.month << "." << group[i].ShelfLife.year;
+	}
+
+}
+
+
+int main()
+{
+    task1();
+    task2();
+}
