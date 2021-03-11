@@ -3,6 +3,7 @@
 using  namespace std;
 
 /* Вывести данные о книгах, тираж которх не превышает 10000 экземпляров */
+
 struct Book
 {
 	char authors[512];
