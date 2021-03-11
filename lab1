@@ -2,7 +2,7 @@
 
 using  namespace std;
 
-/* Вывести данные о книгах, тираж которх не превышает 10000 экземпляров */ 
+/* Вывести данные о книгах, тираж которх не превышает 10000 экземпляров */
 struct Book
 {
 	char authors[512];
@@ -69,9 +69,9 @@ void task1()
 	library[tirageTenThusand].printInfo();
 }
 
-/* вывести наименование товара и конечную дату приминения(годен до:) */ 
+/* вывести наименование товара и конечную дату приминения(годен до:) */
 
-struct Date 
+struct Date
 {
 	short day;
 	short month;
@@ -144,66 +144,62 @@ bool Date::isCorrect()
 }
 struct Tovar
 {
-    char name [256];
-    Date dateOfManufacture;
-    Date ShelfLife;
-    char price[100];
-    short BatchNumber;
+	char name[256];
+	Date dateOfManufacture;
+	Date ShelfLife;
+	char price[100];
+	short BatchNumber;
 };
 
 void task2()
 {
-   const int N = 2;
-   Tovar group[N];
-   
-   for (int i = 0; i < N; i++)
+	const int N = 2;
+	Tovar group[N];
+
+	for (int i = 0; i < N; i++)
 	{
 		cout << "\nInput name: ";
 		cin.ignore(cin.rdbuf()->in_avail());
 		cin.getline(group[i].name, 256);
-		
+
 		cout << "\nInput price: ";
 		cin.ignore(cin.rdbuf()->in_avail());
 		cin.getline(group[i].price, 100);
-		
+
 		cout << "\nInput batch number:";
 		cin.ignore(cin.rdbuf()->in_avail());
 		cin >> group[i].BatchNumber;
-		
-        do
+
+		do
 		{
-            cout << "\nInput date of manufacture: ";
-            cin.ignore(cin.rdbuf()->in_avail());
-	        cin >> group[i].dateOfManufacture.day >> group[i].dateOfManufacture.month >> group[i].dateOfManufacture.year;
+			cout << "\nInput date of manufacture: ";
+			cin.ignore(cin.rdbuf()->in_avail());
+			cin >> group[i].dateOfManufacture.day >> group[i].dateOfManufacture.month >> group[i].dateOfManufacture.year;
 		} while (!group[i].dateOfManufacture.isCorrect());
-		
-	    do
+
+		do
 		{
 			cout << "\nInput shelf life: ";
 			cin.ignore(cin.rdbuf()->in_avail());
 			cin >> group[i].ShelfLife.day >> group[i].ShelfLife.month >> group[i].ShelfLife.year;
-		} while (!group[i].ShelfLife.isCorrect());	
-		
+		} while (!group[i].ShelfLife.isCorrect());
+
 
 		cin.clear();
 	}
-	
+
 	for (int i = 0; i < N; i++)
 	{
-		cout << "\nName: " << group[i].name << endl;
-		cout << "\nDate of manufacture: " << group[i].dateOfManufacture.day << "." << group[i].dateOfManufacture.month << "." << group[i].dateOfManufacture.year;
-		cout << "\nShelf life: " << group[i].ShelfLife.day << "." << group[i].ShelfLife.month << "." << group[i].ShelfLife.year;
-		cout << "\nPrice: " << group[i].price << endl;
-		cout << "\nBatch number: " << group[i].BatchNumber << endl;
-		
-		cout << "Tovar " << group[i].name << " goden do " << group[i].ShelfLife.day << "." << group[i].ShelfLife.month << "." << group[i].ShelfLife.year;
+		cout << "Tovar " << group[i].name << " goden do " << group[i].ShelfLife.day << "." << group[i].ShelfLife.month << "." << group[i].ShelfLife.year << endl;
 	}
-
 }
+
+
+
 
 
 int main()
 {
-    task1();
-    task2();
+	task1();
+	task2();
 }
